@@ -1,34 +1,17 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const MongoClient = require('mongodb').MongoClient;
-const ObjectId = require('mongodb').ObjectId;
+const fs = require('fs');
+const { promisify } = require('util');
+const csv = require('csv-parser');
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
-const app = express();
-const port = process.env.PORT || 3000;
+const readFileAsync = promisify(fs.readFile);
+const writeFileAsync = promisify(fs.writeFile);
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-const url = '<insert your MongoDB connection string here>';
-const dbName = '<insert your database name here>';
-const collectionName = '<insert your collection name here>';
-
-MongoClient.connect(url, { useNewUrlParser: true }, (err, client) => {
-  if (err) return console.log(err);
-
-  const db = client.db(dbName);
-  const collection = db.collection(collectionName);
-
-  app.post('/resetpassword/:id', (req, res) => {
-    const userId = req.params.id;
-    const newPassword = req.body.password;
-
-    // TODO: Implement password reset functionality here
-
-    res.send('Password reset successful');
-  });
-
-  app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
-  });
-});
+/**
+ * Reads multiple CSV files and merges them into a single file.
+ * @param {string[]} files - An array of file paths to read.
+ * @param {string} outputFile - The file path to write the merged data to.
+ * @returns {Promise<void>}
+ */
+async function mergeCsvFiles(files, outputFile) {
+  // TODO: Implement the mergeCsvFiles function
+}
